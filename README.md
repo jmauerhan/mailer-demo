@@ -267,3 +267,108 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 
 ######phpunit
 ![2](https://cloud.githubusercontent.com/assets/4204262/13345367/36153fee-dc2c-11e5-919f-b887e891cd44.PNG)
+
+## Phase 3: TDD - Interface & Adapter
+By writing the tests first, following the Outside-In approach, we will identify our collaborators during the test writing, create an interface for them, mock that interface, and finish the original class. Then we can continue on to creating an implementation of that interface. Because this implementation will be used to adapt another library's functionality to work within our collaborator's api, it is an Adapter. 
+![2](https://github.com/jmauerhan/mailer-demo/blob/master/outside-in.inner-loop.gif)
+
+###3.1 Test First:
+We'll start over, with the AppTest first. We can write two isolated tests, and no longer need an integrated test here. 
+######tests/AppTest.php
+```php
+<?php
+namespace Tests;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Src\App;
+
+Class AppTest extends \PHPUnit_Framework_TestCase
+{
+    private $to = 'foo@bar.com';
+
+    public function testSetMailer()
+    {
+        $mailer = $this->getMock('Src\MailerInterface');
+        $app    = new App();
+        $return = $app->setMailer($mailer);
+        $this->assertEquals($return, $app);
+    }
+
+    public function testSendWelcomeEmail()
+    {
+        $mailer = $this->getMock('Src\MailerInterface');
+        $mailer->method('send')
+               ->willReturn(true);
+
+        $app = new App();
+        $app->setMailer($mailer);
+        $result = $app->sendWelcomeEmail($this->to);
+        $this->assertTrue($result);
+    }
+}
+```
+
+###3.2 Interface
+######src/MailerInterface.php
+```php
+<?php
+namespace Src;
+
+interface MailerInterface
+{
+    /**
+     * @param string $to
+     * @param string $from
+     * @param string $subject
+     * @param string $message
+     * @return boolean
+     */
+    public function send($to, $from, $subject, $message);
+}
+```
+
+###3.3 Write App class to pass Test 
+######src/App.php
+```php
+<?php
+namespace Src;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+Class App
+{
+    /** @var string $from */
+    private $from = 'app@example.com';
+    /** @var string $subject */
+    private $subject = 'Welcome to the App!';
+    /** @var string $message */
+    private $message = 'This is a welcome email!';
+
+    /** @var MailerInterface $mailer */
+    private $mailer;
+
+    /**
+     * @param MailerInterface $mailer
+     * @return $this
+     */
+    public function setMailer(MailerInterface $mailer)
+    {
+        $this->mailer = $mailer;
+        return $this;
+    }
+
+    /**
+     * @param $to
+     * @return boolean
+     */
+    public function sendWelcomeEmail($to)
+    {
+        return $this->mailer->send($to, $this->from, $this->subject, $this->message);
+    }
+}
+```
+
+Our new isolated tests will all be passing at this point:
+######phpunit:
+![3](https://cloud.githubusercontent.com/assets/4204262/13345585/ee5f1d62-dc2d-11e5-9f51-152dfa4e6e55.PNG)
