@@ -3,7 +3,7 @@ This is an example of a simple app to send email, written to demonstrate TDD gui
 
 ## Phase 1: Test-After Approach
 ### 1.1: Vendors
-We do some research and select an email transaction service, Mandrill. We also choose PHPUnit for testing. We create a composer.json and run composer install.
+We do some research and select an email transaction service, Mandrill. We also choose PHPUnit for testing. We create a composer.json and run `composer install`.
 
 ######composer.json
 ```json
@@ -139,7 +139,7 @@ Class AppTest extends \PHPUnit_Framework_TestCase
     }
 }
 ```
-**phpunit**: Passing
+######phpunit: Passing
 ![1](https://cloud.githubusercontent.com/assets/4204262/13345364/2e3f61b4-dc2c-11e5-9316-6684bf734004.PNG)
 
 ## Phase 2: Use Dependency Injection to allow an Isolated Test
@@ -266,7 +266,7 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 }
 ```
 
-**phpunit**: Passing
+######phpunit: Passing
 ![2](https://cloud.githubusercontent.com/assets/4204262/13345367/36153fee-dc2c-11e5-919f-b887e891cd44.PNG)
 
 ## Phase 3: TDD - Interface & Adapter
@@ -370,7 +370,7 @@ Class App
 }
 ```
 
-**phpunit**: Our new isolated tests will all be passing at this point
+######phpunit: Our new isolated tests will all be passing at this point
 ![3](https://cloud.githubusercontent.com/assets/4204262/13345585/ee5f1d62-dc2d-11e5-9f51-152dfa4e6e55.PNG)
 
 ###3.4 Implementation (Adapter)
@@ -474,7 +474,7 @@ $sent = $app->sendWelcomeEmail($to);
 echo 'Welcome Email ' . ($sent ? 'Sent' : 'Failed') . '!';
 ```
 
-**phpunit**: Isolated and Integrated Tests Passing:
+######phpunit: Isolated and Integrated Tests Passing:
 ![4](https://cloud.githubusercontent.com/assets/4204262/13345733/2ba1d34e-dc2f-11e5-81a1-699cd19d9beb.PNG)
 
 ##Phase 4: Handling Change by Adapters
@@ -598,5 +598,5 @@ $sent = $app->sendWelcomeEmail($to);
 echo 'Welcome Email ' . ($sent ? 'Sent' : 'Failed') . '!';
 ```
 
-**phpunit**: Passing
+######phpunit: Passing
 ![6](https://cloud.githubusercontent.com/assets/4204262/13345849/384dc872-dc30-11e5-8c3f-bb81f593bec0.PNG)
