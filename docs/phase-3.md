@@ -204,3 +204,5 @@ $sent = $app->sendWelcomeEmail($to);
 
 echo 'Welcome Email ' . ($sent ? 'Sent' : 'Failed') . '!';
 ```
+######phpunit: Isolated and Integrated Tests Passing:
+![4](https://cloud.githubusercontent.com/assets/4204262/13345733/2ba1d34e-dc2f-11e5-81a1-699cd19d9beb.PNG)
