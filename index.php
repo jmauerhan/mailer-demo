@@ -3,9 +3,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 $to = 'jane.doe@gmail.com';
 
-$apiKey   = 'C0wG3h1A5Fs5xNoLdM2S0w';
-$mandrill = new Mandrill($apiKey);
-$mailer   = new \Src\MandrillMailer($mandrill);
+$apiKey     = 'XgJLUbVFS1YkZyEr';
+$apiUrl     = "https://api.sendinblue.com/v2.0";
+$sendInBlue = new \Sendinblue\Mailin($apiUrl, $apiKey);
+$mailer     = new \Src\SendInBlueMailer($sendInBlue);
 
 $app = new Src\App();
 $app->setMailer($mailer);
