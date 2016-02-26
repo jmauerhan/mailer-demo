@@ -1,0 +1,12 @@
+<phpunit bootstrap="vendor/autoload.php">
+    <groups>
+        <exclude>
+            <group>integrated</group>
+        </exclude>
+    </groups>
+    <testsuites>
+        <testsuite name="core">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
