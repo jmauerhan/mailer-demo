@@ -3,10 +3,19 @@ The interface and adapter pattern that we used when practicing Outside-In TDD is
 
 Let's also imagine we wrote this large application just using Mandrill's library (or a wrapper for it based on Mandrill, instead of based on our application). What happens if suddenly Mandrill decided to make significant changes, like giving us a very short timeline to either migrate to a new provider or start paying high fees? The changes we'd have to make in the codebase could be enormous, depending on how tightly coupled we were with Mandrill. 
 
+![1](https://github.com/jmauerhan/mailer-demo/blob/master/docs/img/announcement.PNG)
+![2](https://github.com/jmauerhan/mailer-demo/blob/master/docs/img/reactions.PNG)
+![3](https://github.com/jmauerhan/mailer-demo/blob/master/docs/img/reactions-2.PNG)
+![4](https://github.com/jmauerhan/mailer-demo/blob/master/docs/img/reactions-3.PNG)
+
 If we instead write our large application using the interface and adapter pattern, to switch to a new provider, we only have to do the following:
 * New Adapter Test
 * New Adapter Implementation
 * Implement new Adapter in Application (config)
+
+![5](https://github.com/jmauerhan/mailer-demo/blob/master/docs/img/abstraction.PNG)
+![6](https://github.com/jmauerhan/mailer-demo/blob/master/docs/img/wellfactored.PNG)
+![7](https://github.com/jmauerhan/mailer-demo/blob/master/docs/img/code.PNG)
 
 ###4.1: New Vendor
 `composer require "mailin-api/mailin-api-php": "^1.0"`
