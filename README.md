@@ -143,8 +143,8 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 ![1](https://cloud.githubusercontent.com/assets/4204262/13345364/2e3f61b4-dc2c-11e5-9316-6684bf734004.PNG)
 
 ## Phase 2: Use Dependency Injection to allow an Isolated Test
-###2.1 Move Mailer Dependency 
-By moving the creation of the Mailer object outside of the App class, we can now test the App class in isolation, with a Test Double. This is the "Tell, Don't Ask" Principle - Give the App the object it needs, don't let it look for or create it.
+###2.1: Move Mailer Dependency 
+By moving the creation of the Mailer object outside of the App class, we can now test the App class in isolation, with a Test Double.
 
 ######index.php
 ```php
@@ -270,11 +270,13 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 ![2](https://cloud.githubusercontent.com/assets/4204262/13345367/36153fee-dc2c-11e5-919f-b887e891cd44.PNG)
 
 ## Phase 3: TDD - Interface & Adapter
-By writing the tests first, following the Outside-In approach, we will identify our collaborators during the test writing, create an interface for them, mock that interface, and finish the original class. Then we can continue on to creating an implementation of that interface. Because this implementation will be used to adapt another library's functionality to work within our collaborator's api, it is an Adapter. 
+By writing the tests first and following the Outside-In approach, we will identify our collaborators during the test writing. We will create an interface for the collaborator, mock that interface, and finish the original class (consumer). This allows us to have control over the design of the collaborator's API, ensuring it fits the context in which we want to use it. Then we can continue on to creating an implementation of that interface. Because this implementation will be used to adapt another library's functionality to work within our collaborator's api, it is an Adapter. 
+
 ![2](https://github.com/jmauerhan/mailer-demo/blob/master/outside-in.inner-loop.gif)
 
-###3.1 Test First:
+###3.1: Test First:
 We'll start over, with the AppTest first. We can write two isolated tests, and no longer need an integrated test here. 
+
 ######tests/AppTest.php
 ```php
 <?php
@@ -480,7 +482,7 @@ echo 'Welcome Email ' . ($sent ? 'Sent' : 'Failed') . '!';
 ##Phase 4: Handling Change by Adapters
 The interface and adapter pattern that we used when practicing Outside-In TDD is much more flexible when we need to change. Imagine our application is not the one index file, but rather a full application that sends many different emails from different triggers. Welcome email, activation email, forgot password, reminders, notifications, etc. 
 
-Let's also imagine we wrote this large application just using Mandrill's library (or a wrapper for it based on Mandrill, instead of based on our application). What happens if suddenyl Mandrill decided to make significant changes, like giving us a very short timeline to either migrate to a new provider or start paying high fees? The changes we'd have to make in the codebase could be enormous, depending on how tightly coupled we were with Mandrill. 
+Let's also imagine we wrote this large application just using Mandrill's library (or a wrapper for it based on Mandrill, instead of based on our application). What happens if suddenly Mandrill decided to make significant changes, like giving us a very short timeline to either migrate to a new provider or start paying high fees? The changes we'd have to make in the codebase could be enormous, depending on how tightly coupled we were with Mandrill. 
 
 If we instead write our large application using the interface and adapter pattern, to switch to a new provider, we only have to do the following:
 * New Adapter Test
