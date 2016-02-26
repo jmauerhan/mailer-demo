@@ -94,6 +94,7 @@ Class App
 At this point, we can only do **integrated** tests - tests that actually depend on both our code working and Mandrill's service working correctly. This kind of test is slow, harder to debug, and brittle.
 
 ######tests/IndexTest.php
+This test of the entire application running is a functional test, not a unit test. It is slow, hard to debug, and brittle - but it's the best we can do right now.
 ```php
 <?php
 namespace Tests;
@@ -138,7 +139,7 @@ Class AppTest extends \PHPUnit_Framework_TestCase
     }
 }
 ```
-###phpunit:
+**phpunit**
 ![1](https://cloud.githubusercontent.com/assets/4204262/13345364/2e3f61b4-dc2c-11e5-9316-6684bf734004.PNG)
 
 ## Phase 2: Use Dependency Injection to allow an Isolated Test
@@ -265,7 +266,7 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 }
 ```
 
-######phpunit
+**phpunit**
 ![2](https://cloud.githubusercontent.com/assets/4204262/13345367/36153fee-dc2c-11e5-919f-b887e891cd44.PNG)
 
 ## Phase 3: TDD - Interface & Adapter
@@ -369,8 +370,7 @@ Class App
 }
 ```
 
-Our new isolated tests will all be passing at this point:
-######phpunit:
+**phpunit**: Our new isolated tests will all be passing at this point
 ![3](https://cloud.githubusercontent.com/assets/4204262/13345585/ee5f1d62-dc2d-11e5-9f51-152dfa4e6e55.PNG)
 
 ###3.4 Implementation (Adapter)
@@ -417,3 +417,62 @@ Class MandrillMailerTest extends \PHPUnit_Framework_TestCase
     }
 }
 ```
+
+######src/MandrillMailer.php
+Now we can create the actual class, and get our unit tests passing. 
+```php
+<?php
+namespace Src;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+class MandrillMailer implements MailerInterface
+{
+    /** @var \Mandrill $mandrill */
+    private $mandrill;
+
+    public function __construct(\Mandrill $mandrill)
+    {
+        $this->mandrill = $mandrill;
+    }
+
+    public function send($to, $from, $subject, $message)
+    {
+        $email = [
+            'to'         => [['email' => $to]],
+            'from_email' => $from,
+            'subject'    => $subject,
+            'text'       => $message
+        ];
+        $this->mandrill->messages->send($email);
+        /**
+         * Since Mandrill requires your sending domain to be verified even when using a test API key,
+         * we will always get a failure, so we're going to skip checking the result of the send call for this demo.
+         */
+        return true;
+    }
+}
+```
+
+We still need the index.php and IndexTest. The functional IndexTest we wrote before can be used, and we'll write an index.php that creates Mandrill, MandrillMailer, and App, and injects the dependencies into their consumers. 
+
+######index.php
+```php
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
+
+$to = 'jane.doe@gmail.com';
+
+$apiKey   = 'C0wG3h1A5Fs5xNoLdM2S0w';
+$mandrill = new Mandrill($apiKey);
+$mailer   = new \Src\MandrillMailer($mandrill);
+
+$app = new Src\App();
+$app->setMailer($mailer);
+$sent = $app->sendWelcomeEmail($to);
+
+echo 'Welcome Email ' . ($sent ? 'Sent' : 'Failed') . '!';
+```
+
+**phpunit** Isolated and Integrated Tests Passing:
+![4](https://cloud.githubusercontent.com/assets/4204262/13345733/2ba1d34e-dc2f-11e5-81a1-699cd19d9beb.PNG)
