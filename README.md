@@ -372,3 +372,48 @@ Class App
 Our new isolated tests will all be passing at this point:
 ######phpunit:
 ![3](https://cloud.githubusercontent.com/assets/4204262/13345585/ee5f1d62-dc2d-11e5-9f51-152dfa4e6e55.PNG)
+
+###3.4 Implementation (Adapter)
+Now we can create an implementation of the MailerInterface, that will adapt the Mandrill library to work with the api we want for our app. The Mandrill library comes with a lot of functionlity we don't need for our app, and the methods aren't named the way we want, or using the arguments we want. So we can use the adapter to make Mandrill work for our Interface that we designed.
+
+Again, we'll start with the tests first. We can do one isolated test for our Adapter's method, and one integrated test to ensure our Adapter is communicating with Mandrill properly. (Since we don't control the Mandrill library and cannot write contract tests for it.)
+
+######tests/MandrillMailer.php
+```php
+<?php
+namespace Tests;
+
+use Src\MandrillMailer;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+Class MandrillMailerTest extends \PHPUnit_Framework_TestCase
+{
+    private $to      = 'foo@bar.com';
+    private $from    = 'bar@foo.com';
+    private $subject = 'Test Subject';
+    private $message = 'Test Message';
+    private $apiKey  = 'C0wG3h1A5Fs5xNoLdM2S0w';
+
+    public function testSend()
+    {
+        $mandrill = $this->getMockBuilder('\Mandrill')
+                         ->setConstructorArgs([$this->apiKey])
+                         ->getMock();
+        $mailer   = new MandrillMailer($mandrill);
+        $result   = $mailer->send($this->to, $this->from, $this->subject, $this->message);
+        $this->assertTrue($result);
+    }
+
+    /**
+     * @group integrated
+     */
+    public function testSendIntegrated()
+    {
+        $mandrill = new \Mandrill($this->apiKey);
+        $mailer   = new MandrillMailer($mandrill);
+        $result   = $mailer->send($this->to, $this->from, $this->subject, $this->message);
+        $this->assertTrue($result);
+    }
+}
+```
