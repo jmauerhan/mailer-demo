@@ -139,7 +139,7 @@ Class AppTest extends \PHPUnit_Framework_TestCase
     }
 }
 ```
-**phpunit**
+**phpunit**: Passing
 ![1](https://cloud.githubusercontent.com/assets/4204262/13345364/2e3f61b4-dc2c-11e5-9316-6684bf734004.PNG)
 
 ## Phase 2: Use Dependency Injection to allow an Isolated Test
@@ -266,7 +266,7 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 }
 ```
 
-**phpunit**
+**phpunit**: Passing
 ![2](https://cloud.githubusercontent.com/assets/4204262/13345367/36153fee-dc2c-11e5-919f-b887e891cd44.PNG)
 
 ## Phase 3: TDD - Interface & Adapter
@@ -598,5 +598,5 @@ $sent = $app->sendWelcomeEmail($to);
 echo 'Welcome Email ' . ($sent ? 'Sent' : 'Failed') . '!';
 ```
 
-**phpunit**
+**phpunit**: Passing
 ![6](https://cloud.githubusercontent.com/assets/4204262/13345849/384dc872-dc30-11e5-8c3f-bb81f593bec0.PNG)
