@@ -1,7 +1,8 @@
 ## Phase 3: TDD - Interface & Adapter
 By writing the tests first and following the Outside-In approach, we will identify our collaborators during the test writing. We will create an interface for the collaborator, mock that interface, and finish the original class (consumer). This allows us to have control over the design of the collaborator's API, ensuring it fits the context in which we want to use it. Then we can continue on to creating an implementation of that interface. Because this implementation will be used to adapt another library's functionality to work within our collaborator's api, it is an Adapter. 
 
-![2](https://github.com/jmauerhan/mailer-demo/blob/master/outside-in.inner-loop.gif)
+######Outside-In Workflow:
+![2](https://github.com/jmauerhan/mailer-demo/blob/master/docs/img/outside-in.inner-loop.gif)
 
 ###3.1: Test First:
 We'll start over, with the AppTest first. We can write two isolated tests, and no longer need an integrated test here. 
