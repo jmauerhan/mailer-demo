@@ -12,14 +12,14 @@ Class App
     /** @var string $message */
     private $message = 'This is a welcome email!';
 
-    /** @var Mandrill $mailer */
+    /** @var MailerInterface $mailer */
     private $mailer;
 
     /**
-     * @param \Mandrill $mailer
+     * @param MailerInterface $mailer
      * @return $this
      */
-    public function setMailer(\Mandrill $mailer)
+    public function setMailer(MailerInterface $mailer)
     {
         $this->mailer = $mailer;
         return $this;
@@ -27,22 +27,10 @@ Class App
 
     /**
      * @param $to
-     * @return string
+     * @return boolean
      */
     public function sendWelcomeEmail($to)
     {
-        $email = [
-            'to'         => [['email' => $to]],
-            'from_email' => $this->from,
-            'subject'    => $this->subject,
-            'text'       => $this->message
-        ];
-
-        $this->mailer->messages->send($email);
-        /**
-         * Since Mandrill requires your sending domain to be verified even when using a test API key,
-         * we will always get a failure, so we're going to skip checking the result of the send for this demo.
-         */
-        return true;
+        return $this->mailer->send($to, $this->from, $this->subject, $this->message);
     }
 }
