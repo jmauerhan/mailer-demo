@@ -1,6 +1,3 @@
-######phpunit: Isolated and Integrated Tests Passing:
-![4](https://cloud.githubusercontent.com/assets/4204262/13345733/2ba1d34e-dc2f-11e5-81a1-699cd19d9beb.PNG)
-
 ##Phase 4: Handling Change by Adapters
 The interface and adapter pattern that we used when practicing Outside-In TDD is much more flexible when we need to change. Imagine our application is not the one index file, but rather a full application that sends many different emails from different triggers. Welcome email, activation email, forgot password, reminders, notifications, etc. 
 
