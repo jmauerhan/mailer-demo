@@ -3,8 +3,6 @@ namespace Src;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Mandrill;
-
 Class App
 {
     /** @var string $from */
@@ -13,17 +11,18 @@ Class App
     private $subject = 'Welcome to the App!';
     /** @var string $message */
     private $message = 'This is a welcome email!';
-    /** @var string $apiKey */
-    private $apiKey = 'C0wG3h1A5Fs5xNoLdM2S0w';
+
     /** @var Mandrill $mailer */
     private $mailer;
 
     /**
-     * App constructor.
+     * @param \Mandrill $mailer
+     * @return $this
      */
-    public function __construct()
+    public function setMailer(\Mandrill $mailer)
     {
-        $this->mailer = new Mandrill($this->apiKey);
+        $this->mailer = $mailer;
+        return $this;
     }
 
     /**
