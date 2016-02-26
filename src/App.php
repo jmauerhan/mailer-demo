@@ -38,11 +38,12 @@ Class App
             'subject'    => $this->subject,
             'text'       => $this->message
         ];
+
+        $this->mailer->messages->send($email);
         /**
          * Since Mandrill requires your sending domain to be verified even when using a test API key,
          * we will always get a failure, so we're going to skip checking the result of the send for this demo.
          */
-        $this->mailer->messages->send($email);
-        return 'Message sent!';
+        return true;
     }
 }
