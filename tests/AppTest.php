@@ -11,9 +11,7 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 
     public function testSetMailer()
     {
-        $mailer = $this->getMockBuilder('Mandrill')
-                       ->setConstructorArgs(['api-key'])
-                       ->getMock();
+        $mailer = $this->getMock('Src\MailerInterface');
         $app    = new App();
         $return = $app->setMailer($mailer);
         $this->assertEquals($return, $app);
@@ -21,23 +19,11 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 
     public function testSendWelcomeEmail()
     {
-        $mailer = $this->getMockBuilder('Mandrill')
-                       ->setConstructorArgs(['api-key'])
-                       ->getMock();
-        $app    = new App();
-        $app->setMailer($mailer);
-        $result = $app->sendWelcomeEmail($this->to);
-        $this->assertTrue($result);
-    }
+        $mailer = $this->getMock('Src\MailerInterface');
+        $mailer->method('send')
+               ->willReturn(true);
 
-    /**
-     * @group integrated
-     */
-    public function testSendWelcomeEmailIntegrated()
-    {
-        $apiKey = 'C0wG3h1A5Fs5xNoLdM2S0w';
-        $mailer = new \Mandrill($apiKey);
-        $app    = new App();
+        $app = new App();
         $app->setMailer($mailer);
         $result = $app->sendWelcomeEmail($this->to);
         $this->assertTrue($result);
