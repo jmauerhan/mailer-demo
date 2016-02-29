@@ -140,5 +140,5 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 ![1](https://cloud.githubusercontent.com/assets/4204262/13345364/2e3f61b4-dc2c-11e5-9316-6684bf734004.PNG)
 
 Nav:
-* [Phase 2: Use Dependency Injection to allow an Isolated Test](docs/phase-2.md)
+* [Phase 2: Use Dependency Injection to allow an Isolated Test](phase-2.md)
 * [Home](readme.md)
