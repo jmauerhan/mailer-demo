@@ -141,4 +141,4 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 
 Nav:
 * [Phase 2: Use Dependency Injection to allow an Isolated Test](phase-2.md)
-* [Home](readme.md)
+* [Home](/readme.md)
