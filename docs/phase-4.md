@@ -130,3 +130,7 @@ echo 'Welcome Email ' . ($sent ? 'Sent' : 'Failed') . '!';
 
 ######phpunit: Passing
 ![6](https://cloud.githubusercontent.com/assets/4204262/13345849/384dc872-dc30-11e5-8c3f-bb81f593bec0.PNG)
+
+Nav:
+* [Phase 3: TDD - Interface & Adapter](docs/phase-3.md)
+* [Home](readme.md)
