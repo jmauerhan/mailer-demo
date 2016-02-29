@@ -207,3 +207,8 @@ echo 'Welcome Email ' . ($sent ? 'Sent' : 'Failed') . '!';
 ```
 ######phpunit: Isolated and Integrated Tests Passing:
 ![4](https://cloud.githubusercontent.com/assets/4204262/13345733/2ba1d34e-dc2f-11e5-81a1-699cd19d9beb.PNG)
+
+Nav:
+* [Phase 2: Use Dependency Injection to allow an Isolated Test](docs/phase-2.md)
+* [Phase 4: Handling Change by Adapters](docs/phase-4.md)
+* [Home](readme.md)
