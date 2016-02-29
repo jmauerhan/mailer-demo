@@ -124,3 +124,8 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 
 ######phpunit: Passing
 ![2](https://cloud.githubusercontent.com/assets/4204262/13345367/36153fee-dc2c-11e5-919f-b887e891cd44.PNG)
+
+Nav:
+* [Phase 1: Test-After Approach](docs/phase-1.md)
+* [Phase 3: TDD - Interface & Adapter](docs/phase-3.md)
+* [Home](readme.md)
