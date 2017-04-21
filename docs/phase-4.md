@@ -1,4 +1,4 @@
-##Phase 4: Handling Change by Adapters
+## Phase 4: Handling Change by Adapters
 The interface and adapter pattern that we used when practicing Outside-In TDD is much more flexible when we need to change. Imagine our application is not the one index file, but rather a full application that sends many different emails from different triggers. Welcome email, activation email, forgot password, reminders, notifications, etc. 
 
 Let's also imagine we wrote this large application just using Mandrill's library (or a wrapper for it based on Mandrill, instead of based on our application). What happens if suddenly Mandrill decided to make significant changes, like giving us a very short timeline to either migrate to a new provider or start paying high fees? The changes we'd have to make in the codebase could be enormous, depending on how tightly coupled we were with Mandrill. 
@@ -17,13 +17,13 @@ If we instead write our large application using the interface and adapter patter
 ![6](https://github.com/jmauerhan/mailer-demo/blob/master/docs/img/wellfactored.PNG)
 ![7](https://github.com/jmauerhan/mailer-demo/blob/master/docs/img/code.PNG)
 
-###4.1: New Vendor
+### 4.1: New Vendor
 `composer require "mailin-api/mailin-api-php": "^1.0"`
 
-###4.2: New Adapter Test
+### 4.2: New Adapter Test
 The new adapter will have the new provider's library as a dependency, just like the Mandrill adapter used the Mandrill library. This library requires an api url, so it's an additional property that our old adapter didn't have. Fortunately, we only have to worry about that in this one file.
 
-######tests/SendInBlueMailerTest.php
+###### tests/SendInBlueMailerTest.php
 ```php
 <?php
 namespace Tests;
@@ -69,9 +69,9 @@ Class SendInBlueMailerTest extends \PHPUnit_Framework_TestCase
 }
 ```
 
-###4.3: Adapter Implementation
+### 4.3: Adapter Implementation
 
-######src/SendInBlueMailer.php
+###### src/SendInBlueMailer.php
 ```php
 <?php
 namespace Src;
@@ -108,8 +108,8 @@ class SendInBlueMailer implements MailerInterface
 
 At this point, the isolated tests will all be passing, and the integrated test for the adapter. All we have to do is update the actual application to **use** the new adapter, and our functional integrated test will pass too.
 
-###4.4: Use Adapter
-######index.php
+### 4.4: Use Adapter
+###### index.php
 ```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
@@ -128,7 +128,7 @@ $sent = $app->sendWelcomeEmail($to);
 echo 'Welcome Email ' . ($sent ? 'Sent' : 'Failed') . '!';
 ```
 
-######phpunit: Passing
+###### phpunit: Passing
 ![6](https://cloud.githubusercontent.com/assets/4204262/13345849/384dc872-dc30-11e5-8c3f-bb81f593bec0.PNG)
 
 Nav:
