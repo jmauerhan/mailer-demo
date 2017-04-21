@@ -2,7 +2,7 @@
 ### 1.1: Vendors
 We do some research and select an email transaction service, Mandrill. We also choose PHPUnit for testing. We create a composer.json and run `composer install`.
 
-######composer.json
+###### composer.json
 ```json
 {
   "require": {
@@ -19,9 +19,9 @@ We do some research and select an email transaction service, Mandrill. We also c
 }
 ```
 
-###1.2: Basic Script
+### 1.2: Basic Script
 We create a simple script to execute from the command line:
-######index.php
+###### index.php
 ```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
@@ -35,7 +35,7 @@ echo 'Welcome Email ' . ($sent ? 'Sent' : 'Failed') . '!';
 ```
 
 Next, following Mandrill's API Documentation, we create the App class to send the email:
-######src/App.php
+###### src/App.php
 ```php
 <?php
 namespace Src;
@@ -87,10 +87,10 @@ Class App
 }
 ```
 
-###1.3: Add some tests
+### 1.3: Add some tests
 At this point, we can only do **integrated** tests - tests that actually depend on both our code working and Mandrill's service working correctly. This kind of test is slow, harder to debug, and brittle.
 
-######tests/IndexTest.php
+###### tests/IndexTest.php
 This test of the entire application running is a functional test, not a unit test. It is slow, hard to debug, and brittle - but it's the best we can do right now.
 ```php
 <?php
@@ -113,7 +113,7 @@ Class IndexTest extends \PHPUnit_Framework_TestCase
 }
 ```
 
-######tests/AppTest.php
+###### tests/AppTest.php
 ```php
 <?php
 namespace Tests;
@@ -136,7 +136,7 @@ Class AppTest extends \PHPUnit_Framework_TestCase
     }
 }
 ```
-######phpunit: Passing
+###### phpunit: Passing
 ![1](https://cloud.githubusercontent.com/assets/4204262/13345364/2e3f61b4-dc2c-11e5-9316-6684bf734004.PNG)
 
 Nav:
