@@ -1,8 +1,8 @@
 ## Phase 2: Use Dependency Injection to allow an Isolated Test
-###2.1: Move Mailer Dependency 
+### 2.1: Move Mailer Dependency 
 By moving the creation of the Mailer object outside of the App class, we can now test the App class in isolation, with a Test Double.
 
-######index.php
+###### index.php
 ```php
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
@@ -19,7 +19,7 @@ $sent = $app->sendWelcomeEmail($to);
 echo 'Welcome Email ' . ($sent ? 'Sent' : 'Failed') . '!';
 ```
 
-######src/App.php
+###### src/App.php
 Use a setter to inject the Mailer. 
 ```php
 <?php
@@ -72,7 +72,7 @@ Class App
 }
 ```
 
-######tests/AppTest.php
+###### tests/AppTest.php
 Add an isolated test, using a test double, to test the `sendWelcomeEmail()` method in isolation. We can also test the Mailer injection using a test double.
 ```php
 <?php
@@ -122,7 +122,7 @@ Class AppTest extends \PHPUnit_Framework_TestCase
 }
 ```
 
-######phpunit: Passing
+###### phpunit: Passing
 ![2](https://cloud.githubusercontent.com/assets/4204262/13345367/36153fee-dc2c-11e5-919f-b887e891cd44.PNG)
 
 Nav:
